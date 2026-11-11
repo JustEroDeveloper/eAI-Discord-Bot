@@ -1,0 +1,9 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+venv/
+channels.json
+last_release.txt
+bot.log
+bot.pid
