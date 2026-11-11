@@ -386,7 +386,8 @@ async def before_release_poller():
     await client.wait_until_ready()
 
 
-@tree.command(name="ask", description="Ask the AI a question — it searches the web first.")
+@tree.command(name="ask", description="Ask the AI a question — it searches the web first.", dm_permission=True)
+@app_commands.allowed_installs(guilds=True, users=True)
 @app_commands.describe(question="What do you want to know?")
 async def ask_command(interaction: discord.Interaction, question: str):
     await interaction.response.defer(thinking=True)
