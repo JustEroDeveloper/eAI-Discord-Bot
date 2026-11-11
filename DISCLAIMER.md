@@ -4,7 +4,6 @@
 
 - Your `DISCORD_TOKEN`, `GITHUB_TOKEN` and any other secrets live **only in your local `.env`** file, which is git-ignored and must never be committed or shared.
 - The bot talks to exactly three services you configure yourself: **Discord**, a **local Ollama** instance, and a **local or self-hosted SearXNG** instance. No telemetry, no third-party servers.
-- The optional **mac controller** (`mac-controller/BotController.swift`) controls the bot on your own machine only.
 
 ## Security notes
 
