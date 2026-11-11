@@ -67,3 +67,7 @@ Developer Portal and **Reset Token** immediately.
 ```
 
 Keys: `s` start · `k` stop · `r` restart · `l` view logs · `h` service health · `q` quit
+
+## Security & Disclaimer
+
+See [DISCLAIMER.md](./DISCLAIMER.md) — no warranty; the author is not responsible for any misuse.
