@@ -21,7 +21,7 @@ PROXY = os.getenv("PROXY", os.environ.get("HTTPS_PROXY", "")).strip() or None
 TRIGGER = "/ask"
 
 # GitHub releases -> Discord announcements
-GITHUB_REPO = os.getenv("GITHUB_REPO", "JustEroDeveloper/eAI")
+GITHUB_REPO = os.getenv("GITHUB_REPO", "embeddiumAI/Desktop")
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN", "").strip() or None
 ANNOUNCEMENTS_CHANNEL_ID = int(os.getenv("ANNOUNCEMENTS_CHANNEL_ID", "0"))
 CHANGELOG_CHANNEL_ID = int(os.getenv("CHANGELOG_CHANNEL_ID", "0"))
