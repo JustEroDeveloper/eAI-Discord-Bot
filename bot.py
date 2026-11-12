@@ -311,6 +311,15 @@ async def pinlatest_command(interaction: discord.Interaction):
 
 @tasks.loop(minutes=config.POLL_INTERVAL_MINUTES)
 async def release_poller():
+    """Poll GitHub releases. Transient network errors are logged and retried
+    on the next tick instead of killing the background task."""
+    try:
+        await _poll_releases()
+    except Exception as exc:
+        print(f"⚠️ Release poll failed (will retry next tick): {exc}")
+
+
+async def _poll_releases():
     # Release poller is global: prefer .env channels, else any guild-configured ones.
     data = _load_channels()
     poll_announce = config.ANNOUNCEMENTS_CHANNEL_ID
@@ -381,6 +390,16 @@ async def release_poller():
             await channel.send(content=mention, embed=announcement)
 
 
+@release_poller.error
+async def release_poller_error(exc):
+    """If the task ever crashes, log it and restart it instead of staying dead."""
+    import traceback
+    traceback.print_exception(type(exc), exc, exc.__traceback__)
+    if not release_poller.is_running():
+        await asyncio.sleep(60)
+        release_poller.start()
+
+
 @release_poller.before_loop
 async def before_release_poller():
     await client.wait_until_ready()
@@ -388,6 +407,7 @@ async def before_release_poller():
 
 @tree.command(name="ask", description="Ask the AI a question — it searches the web first.", )
 @app_commands.allowed_installs(guilds=True, users=True)
+@app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
 @app_commands.describe(question="What do you want to know?")
 async def ask_command(interaction: discord.Interaction, question: str):
     await interaction.response.defer(thinking=True)
